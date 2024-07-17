@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3f;
     public float x;
     public float z;
+    public float xRotation = 0.0f;
+    public float mouseSensitivity = 300.0f;
+    public Transform playerBody;
+    public Transform cameraTransform;
 
     Vector3 velocity;
     bool isGrounded;
@@ -24,6 +28,13 @@ public class PlayerMovement : MonoBehaviour
         inputActions.gameplay.Enable();
         inputActions.gameplay.move.performed += value => Move(value);
         inputActions.gameplay.move.canceled += value => Move(value);
+    }
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        // Initialize xRotation to the current camera rotation
+        xRotation = cameraTransform.localRotation.eulerAngles.x;
     }
 
     void Update()
@@ -45,6 +56,15 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 
     private void Move(UnityEngine.InputSystem.InputAction.CallbackContext value)
