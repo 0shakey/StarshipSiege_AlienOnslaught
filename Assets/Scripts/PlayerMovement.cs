@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3f;
     public float x;
     public float z;
+    public float xLook;
+    public float zLook;
+    public float jump;
     public float xRotation = 0.0f;
     public float mouseSensitivity = 300.0f;
     public Transform playerBody;
@@ -28,6 +31,10 @@ public class PlayerMovement : MonoBehaviour
         inputActions.gameplay.Enable();
         inputActions.gameplay.move.performed += value => Move(value);
         inputActions.gameplay.move.canceled += value => Move(value);
+        inputActions.gameplay.look.performed += value => Look(value);
+        inputActions.gameplay.look.canceled += value => Look(value);
+        inputActions.gameplay.Jump.started += value => Jump(value);
+        inputActions.gameplay.Jump.canceled += value => Jump(value);
     }
 
     private void Start()
@@ -49,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if ((jump == 1) && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -57,8 +64,8 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float mouseX = xLook * mouseSensitivity * Time.deltaTime;
+        float mouseY = zLook * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -69,23 +76,53 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move(UnityEngine.InputSystem.InputAction.CallbackContext value)
     {
-        Debug.Log(value.ReadValue<Vector2>());
+        //Debug.Log(value.ReadValue<Vector2>());
         if (value.started)
         {
-            Debug.Log("Started");
+            //Debug.Log("Started");
            
         }
         else if (value.performed)
         {
-            Debug.Log("Performed");
+            //Debug.Log("Performed");
             x = value.ReadValue<Vector2>().x;
             z = value.ReadValue<Vector2>().y;
         }
         else if (value.canceled)
         {
-            Debug.Log("Canceled");
+            //Debug.Log("Canceled");
             x = value.ReadValue<Vector2>().x;
             z = value.ReadValue<Vector2>().y;
+        }
+    }
+
+    private void Look(UnityEngine.InputSystem.InputAction.CallbackContext value)
+    {
+        if (value.performed)
+        {
+            //Debug.Log("Performed");
+            xLook = value.ReadValue<Vector2>().x;
+            zLook = value.ReadValue<Vector2>().y;
+        }
+        else if (value.canceled)
+        {
+            //Debug.Log("Canceled");
+            xLook = value.ReadValue<Vector2>().x;
+            zLook = value.ReadValue<Vector2>().y;
+        }
+    }
+
+    private void Jump(UnityEngine.InputSystem.InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            //Debug.Log("Started");
+            jump = value.ReadValue<float>();
+        }
+        else if (value.canceled)
+        {
+            //Debug.Log("Canceled");
+            jump = value.ReadValue<float>();
         }
     }
 }

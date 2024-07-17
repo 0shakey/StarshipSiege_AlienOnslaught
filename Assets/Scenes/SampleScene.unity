@@ -237,6 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 271817534}
+  - component: {fileID: 271817536}
   - component: {fileID: 271817535}
   - component: {fileID: 271817533}
   - component: {fileID: 271817532}
@@ -382,8 +383,11 @@ MonoBehaviour:
   jumpHeight: 3
   x: 0
   z: 0
+  xLook: 0
+  zLook: 0
+  jump: 0
   xRotation: 0
-  mouseSensitivity: 300
+  mouseSensitivity: 10
   playerBody: {fileID: 271817534}
   cameraTransform: {fileID: 963194228}
   groundCheck: {fileID: 271817534}
@@ -391,6 +395,20 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &271817536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271817529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45baa44ae33414d4985fc7b3ab96fa18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  armor: 10
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
