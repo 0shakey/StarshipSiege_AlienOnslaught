@@ -27,8 +27,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        //setting the input action asset equal to itself so that it is not equal to null
         inputActions = new PlayerControls();
+        //enabling the action map
         inputActions.gameplay.Enable();
+        //using specific actions from the gameplay action map
+        //Started is when the input is clicked
+        //Performed is when the input is held
+        //Canceled is when the input is released
         inputActions.gameplay.move.performed += value => Move(value);
         inputActions.gameplay.move.canceled += value => Move(value);
         inputActions.gameplay.look.performed += value => Look(value);
@@ -74,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
         playerBody.Rotate(Vector3.up * mouseX);
     }
 
+    //Method has to match signature to with the actions
     private void Move(UnityEngine.InputSystem.InputAction.CallbackContext value)
     {
         //Debug.Log(value.ReadValue<Vector2>());
@@ -85,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         else if (value.performed)
         {
             //Debug.Log("Performed");
+            //reads the value of the x and y movement from the Vector2 which is the move action
             x = value.ReadValue<Vector2>().x;
             z = value.ReadValue<Vector2>().y;
         }
