@@ -71,6 +71,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SceneChanger"",
+                    ""type"": ""Button"",
+                    ""id"": ""90e235be-419c-4fac-b885-86f9dfb2767b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -194,6 +203,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Test"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e28a0f39-ebb5-4ea3-9df2-0acd24001945"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SceneChanger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -207,6 +227,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_gameplay_look = m_gameplay.FindAction("look", throwIfNotFound: true);
         m_gameplay_Jump = m_gameplay.FindAction("Jump", throwIfNotFound: true);
         m_gameplay_Test = m_gameplay.FindAction("Test", throwIfNotFound: true);
+        m_gameplay_SceneChanger = m_gameplay.FindAction("SceneChanger", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +294,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_gameplay_look;
     private readonly InputAction m_gameplay_Jump;
     private readonly InputAction m_gameplay_Test;
+    private readonly InputAction m_gameplay_SceneChanger;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -282,6 +304,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @look => m_Wrapper.m_gameplay_look;
         public InputAction @Jump => m_Wrapper.m_gameplay_Jump;
         public InputAction @Test => m_Wrapper.m_gameplay_Test;
+        public InputAction @SceneChanger => m_Wrapper.m_gameplay_SceneChanger;
         public InputActionMap Get() { return m_Wrapper.m_gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -306,6 +329,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Test.started += instance.OnTest;
             @Test.performed += instance.OnTest;
             @Test.canceled += instance.OnTest;
+            @SceneChanger.started += instance.OnSceneChanger;
+            @SceneChanger.performed += instance.OnSceneChanger;
+            @SceneChanger.canceled += instance.OnSceneChanger;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -325,6 +351,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Test.started -= instance.OnTest;
             @Test.performed -= instance.OnTest;
             @Test.canceled -= instance.OnTest;
+            @SceneChanger.started -= instance.OnSceneChanger;
+            @SceneChanger.performed -= instance.OnSceneChanger;
+            @SceneChanger.canceled -= instance.OnSceneChanger;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -349,5 +378,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
+        void OnSceneChanger(InputAction.CallbackContext context);
     }
 }

@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SceneChanger",
+                    "type": "Button",
+                    "id": "90e235be-419c-4fac-b885-86f9dfb2767b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -170,6 +179,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Test",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e28a0f39-ebb5-4ea3-9df2-0acd24001945",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SceneChanger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
