@@ -5,8 +5,12 @@ using TMPro;
 
 public class DisplayResults : MonoBehaviour
 {
+    // Static variables are variables that are shared between every instance of the class. 
+    // Variables are always the same for each instance of the class.
+    // Static variables can be referenced without a reference to an instance of the class 
     public static int Kills;
     public static int Waves;
+
     public TMP_Text displayText;
 
     public void ShowResults()

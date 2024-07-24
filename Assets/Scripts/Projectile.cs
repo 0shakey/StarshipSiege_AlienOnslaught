@@ -6,10 +6,16 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 20f;
     public float remainingTime = 3.0f;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * speed;
+    }
 
     void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
         if (remainingTime > 0)
         {
             remainingTime -= Time.deltaTime;

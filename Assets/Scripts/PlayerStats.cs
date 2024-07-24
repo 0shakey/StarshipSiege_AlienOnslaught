@@ -5,58 +5,52 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : CharacterStats
 {
-    public PlayerControls inputActions;
-    public float health = 10.0f;
     public float armor = 10.0f;
 
-    public void OnEnable()
+    public override void OnEnable()
     {
-        inputActions = new PlayerControls();
-        inputActions.gameplay.Enable();
-        inputActions.gameplay.Test.started += Test;
+        base.OnEnable();
         inputActions.gameplay.SceneChanger.started += SceneChanger;
     }
 
-    public void OnDisable()
+    public override void OnDisable()
     {
-        inputActions.gameplay.Test.started -= Test;
+        base.OnDisable();
         inputActions.gameplay.SceneChanger.started -= SceneChanger;
     }   
 
-    private void Test(UnityEngine.InputSystem.InputAction.CallbackContext value)
-    {
-        if (value.started)
+    public override void LoseHealth()
+    {     
+        if (armor > 0)
         {
-            if (armor > 0)
-            {
-                armor -= 5.0f;
-            }
-            else
-            {
-                health -= 5.0f;
+            armor -= 5.0f;
+        }
+        else
+        {
+            base.LoseHealth();
+        }
+    }
 
-                if (health <= 0)
-                {
-                    Debug.Log("You Lost");
+    public override void Die()
+    {
+        Debug.Log("Player Death");
+        Debug.Log("You Lost");
 
-                    DisplayResults.Kills = 5;
-                    DisplayResults.Waves = 3;
+        DisplayResults.Kills = 5;
+        DisplayResults.Waves = 3;
 
-                    Cursor.lockState = CursorLockMode.None;
-                    SceneManager.LoadScene(2);                   
-                }
-            }
-        }        
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene(2);        
     }
 
     public void SceneChanger(UnityEngine.InputSystem.InputAction.CallbackContext value)
     {
-        if (value.started) 
+        if (value.started)
         {
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene(2);
         }
-    }
+    }   
 }
