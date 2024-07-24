@@ -46,7 +46,7 @@ public class CharacterStats : MonoBehaviour
 
     //gmaeObject is referring to the game object that this script is attached to
     //other is referring to anything that touches the game object that the script is attached to
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Projectile")
         {
