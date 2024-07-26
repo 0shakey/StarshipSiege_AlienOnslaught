@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 271817530}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1396,9 +1396,9 @@ MonoBehaviour:
   - {fileID: 1217665439}
   baseAlien: {fileID: 6273914683318758040, guid: 902d99027ca4fd346be503b65d5621a5, type: 3}
   roundRemainingTime: 0
-  roundTotalTime: 10
+  roundTotalTime: 3
   waveRemainingTime: 0
-  waveTotalTime: 10
+  waveTotalTime: 3
   waveStarted: 0
   maxRounds: 3
   currentRound: 0
