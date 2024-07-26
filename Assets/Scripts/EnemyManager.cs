@@ -27,6 +27,16 @@ public class EnemyManager : MonoBehaviour
         waveRemainingTime = waveTotalTime;
     }
 
+    private void OnEnable()
+    {
+        CharacterStats.onCharacterDied.AddListener(CharacterDied);
+    }
+
+    private void OnDisable()
+    {
+        CharacterStats.onCharacterDied.RemoveListener(CharacterDied);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -66,12 +76,7 @@ public class EnemyManager : MonoBehaviour
                     Transform spawnPoint = spawnPointList[index];
                     Instantiate(baseAlien, new Vector3(spawnPoint.position.x + Random.Range(-2, 2), spawnPoint.position.y, spawnPoint.position.z + Random.Range(-2, 2)), spawnPoint.rotation);
                     roundRemainingTime = roundTotalTime;
-                    currentRound++;
-
-                    if (currentRound == maxRounds)
-                    {
-                        OnWaveEnded();
-                    }
+                    currentRound++;                   
                 }
             }
         }
@@ -81,5 +86,17 @@ public class EnemyManager : MonoBehaviour
     {
         currentRound = 0;
         waveStarted = false;
+    }
+
+    public void CharacterDied()
+    {
+        if (currentRound == maxRounds)
+        {
+            //Callback happens before destroyed so we check for 1 enemy left
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
+            {
+                OnWaveEnded();
+            }
+        }
     }
 }

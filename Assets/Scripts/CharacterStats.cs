@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,8 @@ public class CharacterStats : MonoBehaviour
 {
     public PlayerControls inputActions;
     public float health = 10.0f;
+
+    public static UnityEvent onCharacterDied = new UnityEvent();
 
     public virtual void OnEnable()
     {
@@ -40,8 +43,9 @@ public class CharacterStats : MonoBehaviour
 
     public virtual void Die()
     {     
-        Debug.Log("Alien Death");     
-        Destroy(gameObject);
+        Debug.Log("Alien Death");
+        onCharacterDied.Invoke();
+        Destroy(gameObject);    
     }
 
     //gmaeObject is referring to the game object that this script is attached to
