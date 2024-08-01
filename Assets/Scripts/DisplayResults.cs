@@ -16,6 +16,10 @@ public class DisplayResults : MonoBehaviour
     public void ShowResults()
     {
         displayText.text = "Kills:" + Kills.ToString() + "\nWaves:" + Waves.ToString();
+
+        //Resets kills and waves after displaying the game results
+        Kills = 0;
+        Waves = 0;
     }
 
     // Start is called before the first frame update

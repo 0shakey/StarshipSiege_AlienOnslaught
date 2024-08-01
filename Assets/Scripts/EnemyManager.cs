@@ -17,6 +17,7 @@ public class EnemyManager : MonoBehaviour
     public float waveRemainingTime;
     public float waveTotalTime = 10.0f;
     public bool waveStarted;
+    public int currentWave = 1;
     public int maxRounds = 3;
     public int currentRound;
 
@@ -86,6 +87,16 @@ public class EnemyManager : MonoBehaviour
     {
         currentRound = 0;
         waveStarted = false;
+        currentWave += 1;
+        DisplayResults.Waves += 1;
+        if (currentWave <= 5)
+        {
+            PlayerStats.money += 50;
+        }
+        else if (currentWave <= 10) 
+        { 
+            PlayerStats.money += 100;
+        }
     }
 
     public void CharacterDied()

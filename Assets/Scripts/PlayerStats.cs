@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerStats : CharacterStats
 {
+    public static int money;
     public float armor = 10.0f;
-
+   
     public override void OnEnable()
     {
         base.OnEnable();
@@ -38,11 +39,10 @@ public class PlayerStats : CharacterStats
         Debug.Log("Player Death");
         Debug.Log("You Lost");
 
-        DisplayResults.Kills = 5;
-        DisplayResults.Waves = 3;
-
+        money = 0;
+       
         Cursor.lockState = CursorLockMode.None;
-        SceneManager.LoadScene(2);        
+        SceneManager.LoadScene(2);         
     }
 
     public void SceneChanger(UnityEngine.InputSystem.InputAction.CallbackContext value)

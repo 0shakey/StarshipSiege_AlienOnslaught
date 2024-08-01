@@ -44,8 +44,9 @@ public class CharacterStats : MonoBehaviour
     public virtual void Die()
     {     
         Debug.Log("Alien Death");
+        DisplayResults.Kills += 1;
         onCharacterDied.Invoke();
-        Destroy(gameObject);    
+        Destroy(gameObject);       
     }
 
     //gmaeObject is referring to the game object that this script is attached to
