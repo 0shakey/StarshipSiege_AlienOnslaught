@@ -4,12 +4,25 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerStats : CharacterStats
 {
     public static int money;
     public float armor = 10.0f;
-   
+    public Image image;
+    public float remainingTime;
+    public float totalTime = 1.5f;
+
+    private void Start()
+    {
+        remainingTime = totalTime;
+    }
+
+    private void Update()
+    {
+        DamageIndicator();
+    }
     public override void OnEnable()
     {
         base.OnEnable();
@@ -20,7 +33,7 @@ public class PlayerStats : CharacterStats
     {
         base.OnDisable();
         inputActions.gameplay.SceneChanger.started -= SceneChanger;
-    }   
+    }
 
     public override void LoseHealth()
     {     
@@ -32,6 +45,7 @@ public class PlayerStats : CharacterStats
         {
             base.LoseHealth();
         }
+        image.color = new Color(214f / 255f, 0f / 255f, 0f / 255f, 140f / 255f); // 140/255 is approximately 0.55
     }
 
     public override void Die()
@@ -43,6 +57,19 @@ public class PlayerStats : CharacterStats
        
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(2);         
+    }
+
+    public void DamageIndicator()
+    {
+        if (remainingTime > 0)
+        {
+            remainingTime -= Time.deltaTime;
+        }
+        else
+        {
+            remainingTime = totalTime;
+            image.color = new Color(214, 0, 0, 0);
+        }
     }
 
     public void SceneChanger(UnityEngine.InputSystem.InputAction.CallbackContext value)
